@@ -91,21 +91,7 @@ export class Game extends React.Component<{}, GameState> {
 
     private renderMoves(history: HistoryEntry[]) {
         let moves = history.map((entry) => {
-            let desc;
-
-            if (entry.step) {
-                if (entry.index != null) {
-                    const row = Math.trunc(entry.index / 3) + 1;
-                    const column = (entry.index % 3) + 1;
-                    desc = `move ${column} - ${row}`;
-                }
-                else {
-                    desc = `move #${entry.step}`;
-                }
-            }
-            else {
-                desc = "start";
-            }
+            const desc = this.createMoveLabel(entry);
 
             const fontWeight = this.state.move === entry.step ? "bold" : "normal";
             return (
@@ -119,6 +105,20 @@ export class Game extends React.Component<{}, GameState> {
             moves = moves.reverse();
         }
         return moves;
+    }
+
+    private createMoveLabel(entry: HistoryEntry) {
+        if (!entry.step) {
+            return "start";
+        }
+
+        if (entry.index != null) {
+            const row = Math.trunc(entry.index / 3) + 1;
+            const column = (entry.index % 3) + 1;
+            return `move ${column} - ${row}`;
+        }
+
+        return `move #${entry.step}`;
     }
 
     private jumpTo(move: number) {
