@@ -1,6 +1,10 @@
 # react-tic-tac-toe
 
-Example repository based on the [reactjs hands on tutorial]https://reactjs.org/tutorial/tutorial.html.
+Simple tic tac toe game based on react and written in Typescript.
+The most notable feature is the time travel feature.
+
+The source code is based on the [reactjs hands-on tutorial](https://reactjs.org/tutorial/tutorial.html.)
+All tasks of the tutorial have been completed, including the improvements.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
