@@ -4,7 +4,7 @@ import { Board } from "./Board";
 import { calculateWinner } from "./calculateWinner";
 
 export type GameState = { history: HistoryEntry[], move: number, xIsNext: boolean, sortAsc: boolean, winner: { player: SquareValue, squares: number[] } | null };
-type HistoryEntry = { squares: SquareValue[], step: number, };
+type HistoryEntry = { squares: SquareValue[], step: number, index: number | null };
 
 export class Game extends React.Component<{}, GameState> {
     public constructor(props: GameState) {
@@ -15,6 +15,7 @@ export class Game extends React.Component<{}, GameState> {
                 {
                     squares: Array(9).fill(null),
                     step: 0,
+                    index: null,
                 }
             ],
             move: 0,
@@ -40,6 +41,7 @@ export class Game extends React.Component<{}, GameState> {
             history: history.concat([{
                 squares,
                 step: nextMove,
+                index,
             }]),
             move: nextMove,
             xIsNext: !this.state.xIsNext,
@@ -89,9 +91,21 @@ export class Game extends React.Component<{}, GameState> {
 
     private renderMoves(history: HistoryEntry[]) {
         let moves = history.map((entry) => {
-            const desc = entry.step ?
-                `move #${entry.step}` :
-                "start";
+            let desc;
+
+            if (entry.step) {
+                if (entry.index != null) {
+                    const row = Math.trunc(entry.index / 3) + 1;
+                    const column = (entry.index % 3) + 1;
+                    desc = `move ${column} - ${row}`;
+                }
+                else {
+                    desc = `move #${entry.step}`;
+                }
+            }
+            else {
+                desc = "start";
+            }
 
             const fontWeight = this.state.move === entry.step ? "bold" : "normal";
             return (
