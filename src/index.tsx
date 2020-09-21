@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
+import { Square } from './Square';
 
 type SquareValue = (string | null);
 
@@ -25,18 +26,6 @@ function calculateWinner(squares: SquareValue[]) {
     }
 
     return null;
-}
-type SquareProps = { value: string | null, onClick(): void, winner: boolean, };
-
-function Square(props: SquareProps) {
-    return (
-        <button className="square"
-                onClick={props.onClick}
-                style={{ background: props.winner ? "lightgreen" : "transparent" }}
-        >
-            {props.value}
-        </button>
-    );
 }
 
 type BoardProps = { squares: SquareValue[], onClick(index: number): void, line: number[] };
